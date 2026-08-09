@@ -1,101 +1,163 @@
 <!doctype html>
 <html lang="ru">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#15364a">
-<title>Профицит · семейный бюджет</title>
-<style>
-:root{--ink:#18313b;--muted:#6d7c7d;--paper:#f3efe4;--card:#fffdf7;--line:#d9d2c2;--deep:#15364a;--green:#567c65;--gold:#a7792c;--red:#a4554d;--blue:#5f7f93;--soft:#eee8da;--shadow:0 10px 30px rgba(37,48,47,.09)}
-*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;background:radial-gradient(circle at 15% 0%,rgba(167,121,44,.08),transparent 25rem),radial-gradient(circle at 88% 12%,rgba(95,127,147,.10),transparent 27rem),var(--paper);color:var(--ink);min-height:100vh}button,input{font:inherit}button{cursor:pointer}.wrap{max-width:980px;margin:auto;padding:18px 14px 44px}.top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:6px 2px 16px;flex-wrap:wrap}.topActions{display:flex;gap:7px;align-items:center}.brand h1{margin:0;font-family:Georgia,serif;font-size:34px}.brand p{margin:4px 0 0;color:var(--muted)}.pill{border:1px solid var(--line);background:rgba(255,253,247,.8);border-radius:999px;padding:9px 13px;color:var(--ink)}.hero{background:linear-gradient(145deg,#173a4f,#224d60);color:white;border-radius:24px;padding:20px;box-shadow:var(--shadow);margin-bottom:12px}.heroTop{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;flex-wrap:wrap}.hero small{opacity:.78}.big{font-size:42px;font-weight:760;margin:5px 0 3px;letter-spacing:-1.4px}.hero .side{text-align:right;font-size:13px;opacity:.9}.hero .side b{display:block;font-size:22px;margin-top:3px}.archiveNotice{display:none;margin-bottom:12px;padding:10px 12px;border:1px solid var(--line);background:#fff7de;border-radius:14px;align-items:center;justify-content:space-between;gap:10px}.archiveNotice.show{display:flex}.metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:12px}.metric{background:rgba(255,253,247,.9);border:1px solid var(--line);border-radius:17px;padding:13px}.metric small{display:block;color:var(--muted);margin-bottom:4px}.metric b{font-size:22px}.miniPair{display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap}.miniPair div{min-width:90px}.miniPair span{display:block;color:var(--muted);font-size:12px;margin-bottom:2px}.miniPair strong{font-size:20px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.card{background:rgba(255,253,247,.94);border:1px solid var(--line);border-radius:20px;padding:16px;box-shadow:0 6px 18px rgba(37,48,47,.05)}.wide{grid-column:1/-1}.head,.row{display:flex;justify-content:space-between;gap:10px;align-items:center}.head{margin-bottom:10px}.title{font-size:18px;font-weight:730}.icon{font-size:23px}.amount{font-size:26px;font-weight:760}.sub{color:var(--muted);font-size:13px;margin-top:3px}.btn{border:0;border-radius:12px;padding:9px 12px;background:var(--deep);color:#fff;font-weight:650}.btn.secondary{background:#e7e0d2;color:var(--ink)}.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}.btn.tiny{padding:6px 9px;font-size:12px}.btn.danger{background:transparent;color:var(--red);border:1px solid rgba(164,85,77,.3)}.btn:disabled{opacity:.45;cursor:not-allowed}.progress{height:9px;background:#e7e0d2;border-radius:999px;overflow:hidden;margin:10px 0 6px}.progress i{display:block;height:100%;background:var(--green);width:0;border-radius:inherit}.progress.blue i{background:var(--blue)}.progress.gold i{background:var(--gold)}.bucketList{display:grid;gap:8px;margin-top:10px}.bucket{border:1px solid var(--line);border-radius:15px;padding:11px;background:#faf7ef}.bucketTop{display:flex;justify-content:space-between;align-items:center;gap:10px}.bucketName{font-weight:680}.bucketRemain{font-weight:760;font-size:18px}.fixedGroups{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:10px}.fixedGroup{border:1px solid var(--line);border-radius:16px;padding:12px;background:#faf7ef}.fixedHead{display:flex;justify-content:space-between;align-items:center;gap:8px}.fixedTitle{font-weight:720}.fixedItem{display:grid;grid-template-columns:auto 1fr auto;gap:9px;align-items:center;padding:9px 0;border-bottom:1px dashed var(--line)}.fixedItem:last-child{border-bottom:0}.fixedItem input[type=checkbox]{width:18px;height:18px}.fixedItem.inactive .fiName{opacity:.5}.fiName{font-weight:630}.fiMeta{font-size:12px;color:var(--muted);margin-top:2px}.fiActions{display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end}.empty{color:var(--muted);font-size:13px;padding:8px 0}.lab{border-style:dashed}.breakdown{display:grid;gap:7px;margin-top:8px}.br{display:flex;justify-content:space-between;gap:10px;padding:7px 0;border-bottom:1px dashed var(--line)}.br:last-child{border-bottom:0;font-weight:760}.history{margin-top:12px}.tx{display:grid;grid-template-columns:1fr auto auto;gap:10px;align-items:center;padding:10px 0;border-bottom:1px dashed var(--line);font-size:14px}.tx:last-child{border-bottom:0}.tx small{display:block;color:var(--muted);margin-top:2px}.txAmount{font-weight:750;white-space:nowrap}.txActions{display:flex;gap:5px}.backupBar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:12px;padding-top:12px;border-top:1px dashed var(--line)}.backupStatus{font-size:12px;color:var(--muted);margin-left:auto}.tag{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:3px 7px;font-size:11px;color:var(--muted);background:#faf7ef}.periodList{display:grid;gap:7px;margin-top:10px}.periodBtn{width:100%;display:flex;justify-content:space-between;gap:10px;align-items:center;border:1px solid var(--line);background:#faf7ef;color:var(--ink);padding:10px 11px;border-radius:12px;text-align:left}.periodBtn.current{border-color:#8fa8b4;background:#edf3f5}.periodBtn small{display:block;color:var(--muted);margin-top:2px}.dangerZone{margin-top:14px;padding-top:12px;border-top:1px dashed var(--line)}dialog{border:0;border-radius:22px;padding:0;max-width:470px;width:calc(100% - 28px);background:var(--card);color:var(--ink);box-shadow:0 30px 90px rgba(0,0,0,.3)}dialog::backdrop{background:rgba(17,32,36,.48)}.modal{padding:20px}.modal h3{margin:0 0 5px;font-size:22px}.modal p{color:var(--muted);font-size:14px;margin:0 0 14px}label{display:block;font-size:13px;color:var(--muted);margin:10px 0 5px}input{width:100%;border:1px solid var(--line);border-radius:12px;padding:10px 11px;background:#fff;color:var(--ink);font-size:16px}.formGrid{display:grid;grid-template-columns:1fr 1fr;gap:0 10px}.full{grid-column:1/-1}.modalActions{display:flex;justify-content:flex-end;gap:8px;margin-top:16px}.note{margin-top:10px;padding:10px 12px;border-radius:13px;background:var(--soft);font-size:13px;color:#5f635f}.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,18px);background:#193542;color:#fff;padding:10px 14px;border-radius:999px;opacity:0;pointer-events:none;transition:.2s;z-index:30;max-width:90vw;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.toast.show{opacity:1;transform:translate(-50%,0)}
-@media(max-width:680px){.wrap{padding:12px 10px 34px}.grid{grid-template-columns:1fr}.wide{grid-column:auto}.metrics{grid-template-columns:1fr}.fixedGroups{grid-template-columns:1fr}.brand h1{font-size:30px}.big{font-size:37px}.formGrid{grid-template-columns:1fr}.full{grid-column:auto}.hero .side{text-align:left}.tx{grid-template-columns:1fr auto}.txActions{grid-column:1/-1}.backupStatus{width:100%;margin-left:0}.archiveNotice{align-items:flex-start}}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#15364a">
+  <title>Профицит · семейная республика</title>
+  <link rel="stylesheet" href="./style.css?v=5">
 </head>
 <body>
 <main class="wrap">
-<div class="top"><div class="brand"><h1>Профицит</h1><p>Семейная республика бережёт казну.</p></div><div class="topActions"><button class="pill" id="periodBtn">📅 <span id="monthLabel"></span> ▾</button><button class="pill" id="settingsBtn">⚙</button></div></div>
-<div class="archiveNotice" id="archiveNotice"><div><b id="archiveTitle"></b><div class="sub">Архивный период открыт только для просмотра.</div></div><button class="btn tiny" id="backCurrentBtn">Вернуться в текущий</button></div>
-<section class="hero"><div class="heroTop"><div><small>ПРОФИЦИТ ПО ПЛАНУ</small><div class="big" id="profitPlanned">0 ₽</div><div class="sub" style="color:rgba(255,255,255,.75)">После плана отложенных, Минсельхоза, Минкульта, МЧС и активных обязательств.</div></div><div class="side">ФНБ · накопленные профициты<b id="profitVault">0 ₽</b></div></div></section>
-<section class="metrics">
-<div class="metric"><small>Доход за период</small><b id="incomeTotal">0 ₽</b><div style="margin-top:8px"><button class="btn tiny editable" id="incomeAddBtn">+ добавить доход</button></div></div>
-<div class="metric"><small>Казначейство · отложено</small><div class="miniPair"><div><span>План 10%</span><strong id="savedPlan">0 ₽</strong></div><div><span>Факт</span><strong id="savedFact">0 ₽</strong></div></div><div class="progress gold"><i id="savingBar"></i></div><div class="row"><div class="sub" id="savingRemain">До плана 0 ₽</div><button class="btn tiny editable" id="savingAddBtn">+ отложить</button></div></div>
-<div class="metric"><small>Остаток денег сейчас</small><b id="cashNow">0 ₽</b><div class="sub">Доходы минус фактически отложенное, текущие траты, МЧС и активные обязательства.</div></div>
-</section>
-<section class="grid">
-<article class="card"><div class="head"><div><div class="title">Минсельхоз · продукты</div><div class="sub">Два отдельных недельных конверта.</div></div><div class="icon">🥖</div></div><div class="bucketList" id="foodBuckets"></div></article>
-<article class="card"><div class="head"><div><div class="title">Минкульт · социалка</div><div class="sub">Три личных месячных конверта.</div></div><div class="icon">🎭</div></div><div class="bucketList" id="socialBuckets"></div></article>
-<article class="card wide"><div class="head"><div><div class="title">МВД · обязательства</div><div class="sub">Галочка = статья активна и учитывается каждый финансовый месяц. Ничего само не сбрасывается.</div></div><div class="icon">🏛️</div></div><div class="fixedGroups" id="fixedGroups"></div></article>
-<article class="card lab"><div class="head"><div><div class="title">Безумный профессор · кэшбек</div><div class="sub">Всё, что банк по глупости вернул, идёт в эксперименты.</div></div><div class="icon">🧪</div></div><div class="row"><div><div class="amount" id="cashbackBalance">0 ₽</div><div class="sub">баланс лаборатории</div></div><div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end"><button class="btn secondary tiny editable" id="cashbackAddBtn">+ кэшбек</button><button class="btn tiny editable" id="riskAddBtn">→ инвестиция</button></div></div></article>
-<article class="card"><div class="head"><div><div class="title">МЧС</div><div class="sub">Внеплановая хрень. Загнала сумму — и пошла дальше жить.</div></div><div class="icon">🚨</div></div><div class="row"><div><div class="amount" id="emergencySpent">0 ₽</div><div class="sub">ушло на внезапности в этом периоде</div></div><button class="btn tiny editable" id="emergencyAddBtn">+ расход</button></div></article>
-<article class="card"><div class="head"><div class="title">Контрольно-счётная палата</div><div class="icon">🧮</div></div><div class="breakdown" id="breakdown"></div><div class="note">Финансовый месяц идёт с 9-го по 8-е. На продукты резервируем ровно четыре недельных лимита.</div></article>
-</section>
-<section class="card history"><div class="head"><div><div class="title">Движения</div><div class="sub">Доход, отложенное, ручные траты, МЧС, кэшбек и инвестиции можно исправить или удалить.</div></div><div class="icon">🧾</div></div><div id="historyList"></div><div class="backupBar"><button class="btn ghost tiny" id="backupBtn">↓ резервная копия</button><button class="btn ghost tiny editable" id="restoreBtn">↑ восстановить</button><input id="restoreFile" type="file" accept="application/json,.json" hidden><span class="tag">автосохранение включено</span><span class="backupStatus" id="backupStatus">Файл ещё не выгружался</span></div></section>
+  <header class="top">
+    <div class="brand"><h1>Профицит</h1><p>Государственная информационная система семейной республики.</p></div>
+    <div class="topActions">
+      <button class="pill" id="periodBtn">📅 <span id="monthLabel"></span> ▾</button>
+      <button class="pill" id="settingsBtn">⚙</button>
+    </div>
+  </header>
+
+  <div class="archiveNotice" id="archiveNotice">
+    <div><b id="archiveTitle"></b><div class="sub">Архивный период открыт только для просмотра.</div></div>
+    <button class="btn tiny" id="backCurrentBtn">Вернуться в текущий</button>
+  </div>
+
+  <section class="hero">
+    <div class="heroTop">
+      <div>
+        <small>СКВОЗНОЙ ПРОФИЦИТ · ПОСЛЕ ИСПОЛНЕНИЯ ПЛАНА</small>
+        <div class="big" id="profitProjected">0 ₽</div>
+        <div class="heroSub">Может быть отрицательным. Это не ошибка — это честное состояние казны.</div>
+      </div>
+      <div class="heroSide">
+        <span>Если закрыть период прямо сейчас</span><b id="profitIfClose">0 ₽</b>
+        <span>Результат текущего периода по плану</span><b class="smallBig" id="periodResult">0 ₽</b>
+      </div>
+    </div>
+  </section>
+
+  <section class="metrics">
+    <article class="metric">
+      <small>Доход за период</small><b id="incomeTotal">0 ₽</b>
+      <div class="incomeBars" id="incomeBars"></div>
+      <button class="btn tiny editable" id="incomeAddBtn">+ добавить доход</button>
+    </article>
+    <article class="metric">
+      <small>Казначейство · отложено</small>
+      <div class="miniPair"><div><span>План 10%</span><strong id="savedPlan">0 ₽</strong></div><div><span>Факт</span><strong id="savedFact">0 ₽</strong></div></div>
+      <div class="progress gold"><i id="savingBar"></i></div>
+      <div class="row"><div class="sub" id="savingRemain"></div><button class="btn tiny editable" id="savingAddBtn">+ отложить</button></div>
+    </article>
+    <article class="metric">
+      <small>Факт по деньгам сейчас</small><b id="cashFact">0 ₽</b>
+      <div class="sub">Сквозной остаток после уже совершённых движений. Плановые, но ещё не совершённые расходы сюда не попадают.</div>
+    </article>
+  </section>
+
+  <section class="grid">
+    <article class="card">
+      <div class="head"><div><div class="title">Минсельхоз · продукты</div><div class="sub">Четыре бюджетные недели внутри финансового месяца.</div></div><div class="icon">🥖</div></div>
+      <div class="bucketList" id="foodBuckets"></div>
+    </article>
+
+    <article class="card">
+      <div class="head"><div><div class="title">Минкульт · социалка</div><div class="sub">Три личных конверта на финансовый месяц.</div></div><div class="icon">🎭</div></div>
+      <div class="bucketList" id="socialBuckets"></div>
+    </article>
+
+    <article class="card wide">
+      <div class="head"><div><div class="title">МВД · обязательства</div><div class="sub">«Действует» живёт сквозь месяцы. «Оплачено» — отдельная отметка каждого периода.</div></div><div class="icon">🏛️</div></div>
+      <div class="fixedGroups" id="fixedGroups"></div>
+    </article>
+
+    <article class="card">
+      <div class="head"><div><div class="title">Минфин · госдолг</div><div class="sub">Проценты обслуживаем, всё сверх них уменьшает тело.</div></div><div class="icon">🧱</div></div>
+      <div class="debtSummary"><span>Тело долгов сейчас</span><b id="debtTotal">0 ₽</b></div>
+      <div class="debtList" id="debtList"></div>
+      <button class="btn tiny secondary editable" id="debtAddBtn">+ добавить долг</button>
+    </article>
+
+    <article class="card lab">
+      <div class="head"><div><div class="title">Безумный профессор · кэшбек</div><div class="sub">Всё, что банк по глупости вернул, идёт в эксперименты.</div></div><div class="icon">🧪</div></div>
+      <div class="row"><div><div class="amount" id="cashbackBalance">0 ₽</div><div class="sub">баланс лаборатории</div></div><div class="buttonStack"><button class="btn secondary tiny editable" id="cashbackAddBtn">+ кэшбек</button><button class="btn tiny editable" id="riskAddBtn">→ инвестиция</button></div></div>
+    </article>
+
+    <article class="card">
+      <div class="head"><div><div class="title">МЧС</div><div class="sub">Не хотелка. Просто жизнь внезапно выставила счёт.</div></div><div class="icon">🚨</div></div>
+      <div class="row"><div><div class="amount" id="emergencySpent">0 ₽</div><div class="sub">внепланово потрачено в этом периоде</div></div><button class="btn tiny editable" id="emergencyAddBtn">+ расход</button></div>
+    </article>
+
+    <article class="card businessCard">
+      <div class="head"><div><div class="title">Бизнес должен</div><div class="sub">Семья авансировала бизнес своими деньгами.</div></div><div class="icon">🧾</div></div>
+      <div class="amount" id="businessDue">0 ₽</div>
+      <div class="businessStats"><span>Начислено за период <b id="businessCharged">0 ₽</b></span><span>Возвращено <b id="businessReturned">0 ₽</b></span></div>
+      <button class="btn tiny editable" id="businessReturnBtn">+ бизнес вернул</button>
+    </article>
+
+    <article class="card wide">
+      <div class="head"><div class="title">Контрольно-счётная палата</div><div class="icon">🧮</div></div>
+      <div class="breakdown" id="breakdown"></div>
+      <div class="note">При закрытии периода только тогда высвобождаются непотраченные остатки Минсельхоза и Минкульта. МВД остаётся зарезервированным по активным обязательствам.</div>
+    </article>
+  </section>
+
+  <section class="card history">
+    <div class="head"><div><div class="title">Движения</div><div class="sub">Ручные записи можно исправить или удалить. Метка «Бизнес» видна прямо здесь.</div></div><div class="icon">📜</div></div>
+    <div id="historyList"></div>
+    <div class="backupBar">
+      <button class="btn ghost tiny" id="backupBtn">↓ резервная копия</button>
+      <button class="btn ghost tiny editable" id="restoreBtn">↑ восстановить</button>
+      <input id="restoreFile" type="file" accept="application/json,.json" hidden>
+      <span class="tag">автосохранение включено</span><span class="backupStatus" id="backupStatus"></span>
+    </div>
+  </section>
 </main>
 
-<dialog id="settingsDialog"><div class="modal"><h3>Лимиты</h3><p>Рамки конвертов постоянные, пока ты сама их не изменишь.</p><div class="formGrid"><div><label>Минсельхоз · мы с Тимохой / неделя</label><input id="foodCoupleInput" type="number" min="0" step="100"></div><div><label>Минсельхоз · мама / неделя</label><input id="foodMomInput" type="number" min="0" step="100"></div><div><label>Минкульт · Оксана / период</label><input id="socialOksanaInput" type="number" min="0" step="100"></div><div><label>Минкульт · Тимоха / период</label><input id="socialTimInput" type="number" min="0" step="100"></div><div class="full"><label>Минкульт · мама / период</label><input id="socialMomInput" type="number" min="0" step="100"></div></div><div class="modalActions"><button class="btn secondary" id="settingsCancel">Отмена</button><button class="btn" id="settingsSave">Сохранить</button></div></div></dialog>
-<dialog id="entryDialog"><div class="modal"><h3 id="entryTitle">Запись</h3><p id="entryHint"></p><label>Сумма</label><input id="entryAmount" type="number" min="0" step="1"><label>Комментарий</label><input id="entryNote" type="text" placeholder="необязательно"><div class="modalActions"><button class="btn secondary" id="entryCancel">Отмена</button><button class="btn" id="entrySave">Сохранить</button></div></div></dialog>
-<dialog id="fixedDialog"><div class="modal"><h3 id="fixedDialogTitle">Новая статья</h3><p id="fixedDialogHint"></p><label>Название</label><input id="fixedNameInput" type="text" placeholder="например: Инет Уренгой"><label>Сумма</label><input id="fixedAmountInput" type="number" min="0" step="1"><div class="modalActions"><button class="btn secondary" id="fixedCancel">Отмена</button><button class="btn" id="fixedSave">Сохранить</button></div></div></dialog>
+<dialog id="settingsDialog"><div class="modal"><h3>Лимиты</h3><p>Рамки конвертов постоянные, пока ты сама их не изменишь.</p><div class="formGrid">
+  <div><label>Минсельхоз · мы с Тимохой / неделя</label><input id="foodCoupleInput" type="number" min="0" step="100"></div>
+  <div><label>Минсельхоз · мама / неделя</label><input id="foodMomInput" type="number" min="0" step="100"></div>
+  <div><label>Минкульт · Оксана / период</label><input id="socialOksanaInput" type="number" min="0" step="100"></div>
+  <div><label>Минкульт · Тимоха / период</label><input id="socialTimInput" type="number" min="0" step="100"></div>
+  <div class="full"><label>Минкульт · мама / период</label><input id="socialMomInput" type="number" min="0" step="100"></div>
+</div><div class="modalActions"><button class="btn secondary" id="settingsCancel">Отмена</button><button class="btn" id="settingsSave">Сохранить</button></div></div></dialog>
+
+<dialog id="entryDialog"><div class="modal"><h3 id="entryTitle">Запись</h3><p id="entryHint"></p>
+  <div id="ownerWrap"><label>Чей доход</label><select id="entryOwner"><option>Оксана</option><option>Тимоха</option><option>Мама</option><option>Совместный</option><option>Другое</option></select></div>
+  <label>Сумма</label><input id="entryAmount" type="number" min="0" step="1">
+  <label>Комментарий</label><input id="entryNote" type="text" placeholder="необязательно">
+  <label class="checkLine" id="businessWrap"><input id="entryBusiness" type="checkbox"> <span>Расход бизнеса</span></label>
+  <div class="modalActions"><button class="btn secondary" id="entryCancel">Отмена</button><button class="btn" id="entrySave">Сохранить</button></div>
+</div></dialog>
+
+<dialog id="fixedDialog"><div class="modal"><h3 id="fixedDialogTitle">Новая статья</h3><p id="fixedDialogHint"></p>
+  <label>Название</label><input id="fixedNameInput" type="text" placeholder="например: Инет Уренгой">
+  <label>Сумма</label><input id="fixedAmountInput" type="number" min="0" step="1">
+  <label class="checkLine"><input id="fixedBusinessInput" type="checkbox"> <span>Расход бизнеса</span></label>
+  <label class="checkLine"><input id="fixedActiveInput" type="checkbox"> <span>Обязательство действует</span></label>
+  <div class="modalActions"><button class="btn secondary" id="fixedCancel">Отмена</button><button class="btn" id="fixedSave">Сохранить</button></div>
+</div></dialog>
+
+<dialog id="debtDialog"><div class="modal"><h3 id="debtDialogTitle">Долг</h3><p>Проценты — обязательный расход периода. Всё, что платишь сверх них, гасит тело.</p>
+  <label>Название</label><input id="debtNameInput" type="text" placeholder="например: кредит 370">
+  <label>Тело долга сейчас</label><input id="debtPrincipalInput" type="number" min="0" step="1">
+  <label>Проценты / обязательный платёж за период</label><input id="debtInterestInput" type="number" min="0" step="1">
+  <label class="checkLine"><input id="debtActiveInput" type="checkbox"> <span>Долг действует</span></label>
+  <div class="modalActions"><button class="btn secondary" id="debtCancel">Отмена</button><button class="btn" id="debtSave">Сохранить</button></div>
+</div></dialog>
+
+<dialog id="debtPayDialog"><div class="modal"><h3 id="debtPayTitle">Платёж по долгу</h3><p id="debtPayHint"></p>
+  <label>Сумма платежа</label><input id="debtPayAmount" type="number" min="0" step="1">
+  <label>Комментарий</label><input id="debtPayNote" type="text" placeholder="необязательно">
+  <label class="checkLine"><input id="debtPayBusiness" type="checkbox"> <span>Расход бизнеса</span></label>
+  <div class="modalActions"><button class="btn secondary" id="debtPayCancel">Отмена</button><button class="btn" id="debtPaySave">Записать платёж</button></div>
+</div></dialog>
+
 <dialog id="periodDialog"><div class="modal"><h3>Финансовые месяцы</h3><p>Каждый период идёт с 9-го числа по 8-е следующего месяца.</p><div class="periodList" id="periodList"></div><div class="dangerZone"><button class="btn" id="closePeriodBtn">Закрыть текущий месяц</button><div class="note" id="closeHint"></div></div><div class="modalActions"><button class="btn secondary" id="periodClose">Закрыть окно</button></div></div></dialog>
+
 <div class="toast" id="toast"></div>
-<script>
-(()=>{
-const KEY='profit-land-v4',V3='profit-land-v3',SNAP='profit-land-v4-snapshots',BACKUP='profit-land-last-file-backup',FOOD_WEEKS=4;
-const $=s=>document.querySelector(s),clone=o=>JSON.parse(JSON.stringify(o)),id=()=>Math.random().toString(36).slice(2)+Date.now().toString(36),money=n=>new Intl.NumberFormat('ru-RU',{maximumFractionDigits:0}).format(Math.round(Number(n)||0))+' ₽';
-const iso=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-function periodIdFromDate(d=new Date()){const x=new Date(d);if(x.getDate()<9)x.setMonth(x.getMonth()-1);return `${x.getFullYear()}-${String(x.getMonth()+1).padStart(2,'0')}`}
-function periodDates(pid){const [y,m]=pid.split('-').map(Number);const start=new Date(y,m-1,9),end=new Date(y,m,8);return{start:iso(start),end:iso(end)}}
-function nextPeriodId(pid){const [y,m]=pid.split('-').map(Number),d=new Date(y,m,1);return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`}
-function periodLabel(pid){const [y,m]=pid.split('-').map(Number);return new Intl.DateTimeFormat('ru-RU',{month:'long',year:'numeric'}).format(new Date(y,m-1,9)).replace(/^./,c=>c.toUpperCase())}
-function shortDate(s){const d=new Date(s+'T12:00:00');return new Intl.DateTimeFormat('ru-RU',{day:'2-digit',month:'2-digit'}).format(d)}
-function weekKey(d){const x=new Date(d),day=(x.getDay()+6)%7;x.setHours(0,0,0,0);x.setDate(x.getDate()-day);return iso(x)}
-function defaultBudgets(){return{food:{couple:{name:'Мы с Тимохой',limit:2500},mom:{name:'Мама',limit:0}},social:{oksana:{name:'Оксана',limit:3000},tim:{name:'Тимоха',limit:0},mom:{name:'Мама',limit:0}},fixed:{housing:{name:'Квартира',items:[]},comm:{name:'Связь',items:[]},digital:{name:'Цифровое',items:[]},car:{name:'Машина / парковка',items:[]}}}}
-function newPeriod(pid=periodIdFromDate()){const d=periodDates(pid);return{id:pid,start:d.start,end:d.end,incomes:[],savings:[],expenses:[],cashbacks:[],risks:[],emergencies:[]}}
-function defaults(){return{version:4,budgets:defaultBudgets(),activePeriod:newPeriod(),archives:[],cashbackCarry:0,profitVault:0}}
-function migrateV3(v){const s=defaults();if(!v)return s;const pid=v.month||periodIdFromDate();s.activePeriod=newPeriod(pid);for(const k of ['incomes','savings','expenses','cashbacks','risks'])s.activePeriod[k]=clone(v[k]||[]);s.budgets=clone(v.budgets||s.budgets);for(const g of Object.values(s.budgets.fixed)){for(const item of g.items||[]){item.active=!!item.paid;delete item.paid}}s.profitVault=0;return s}
-function load(){try{const v=JSON.parse(localStorage.getItem(KEY));if(v?.version===4)return v}catch{}try{const v3=JSON.parse(localStorage.getItem(V3));const s=migrateV3(v3);localStorage.setItem(KEY,JSON.stringify(s));return s}catch{}const s=defaults();localStorage.setItem(KEY,JSON.stringify(s));return s}
-let state=load(),viewArchiveId=null,entryMode=null,editRef=null,fixedRef=null;
-function snapshot(){try{const a=JSON.parse(localStorage.getItem(SNAP)||'[]');a.push({ts:Date.now(),state:clone(state)});while(a.length>20)a.shift();localStorage.setItem(SNAP,JSON.stringify(a))}catch{}}
-function save(){snapshot();localStorage.setItem(KEY,JSON.stringify(state));updateBackupStatus()}
-function sum(a){return a.reduce((x,y)=>x+(+y||0),0)}
-function activeView(){if(viewArchiveId){const a=state.archives.find(x=>x.id===viewArchiveId);if(a)return{period:a.period,budgets:a.budgets,cashbackCarry:a.cashbackCarry||0,archived:true,closingProfit:a.closingProfit||0}}return{period:state.activePeriod,budgets:state.budgets,cashbackCarry:state.cashbackCarry,archived:false}}
-function incomeTotal(v){return sum(v.period.incomes.map(x=>x.amount))}function savingsPlan(v){return incomeTotal(v)*.1}function savingsFact(v){return sum(v.period.savings.map(x=>x.amount))}
-function foodPlan(v){return sum(Object.values(v.budgets.food).map(x=>x.limit))*FOOD_WEEKS}function socialPlan(v){return sum(Object.values(v.budgets.social).map(x=>x.limit))}
-function activeFixed(v){return Object.values(v.budgets.fixed).flatMap(g=>g.items||[]).filter(x=>x.active)}function fixedPlan(v){return sum(activeFixed(v).map(x=>x.amount))}
-function variableSpent(v){return sum(v.period.expenses.map(x=>x.amount))}function emergencySpent(v){return sum(v.period.emergencies.map(x=>x.amount))}
-function plannedProfit(v){return incomeTotal(v)-savingsPlan(v)-foodPlan(v)-socialPlan(v)-fixedPlan(v)-emergencySpent(v)}
-function cashNow(v){return incomeTotal(v)-savingsFact(v)-variableSpent(v)-fixedPlan(v)-emergencySpent(v)}
-function cashbackBalance(v){return (v.cashbackCarry||0)+sum(v.period.cashbacks.map(x=>x.amount))-sum(v.period.risks.map(x=>x.amount))}
-function currentWeekSpent(v,bucket){if(v.archived)return sum(v.period.expenses.filter(x=>x.envelope==='food'&&x.bucket===bucket).map(x=>x.amount));const wk=weekKey(new Date());return sum(v.period.expenses.filter(x=>x.envelope==='food'&&x.bucket===bucket&&x.week===wk).map(x=>x.amount))}
-function socialSpent(v,bucket){return sum(v.period.expenses.filter(x=>x.envelope==='social'&&x.bucket===bucket).map(x=>x.amount))}
-function safe(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
-function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(toast.timer);toast.timer=setTimeout(()=>t.classList.remove('show'),1700)}
-function setEditable(on){document.querySelectorAll('.editable,[data-add-fixed],[data-edit-fixed],[data-delete-fixed],[data-toggle-fixed],[data-spend],[data-edit-tx],[data-delete-tx]').forEach(el=>el.disabled=!on);$('#settingsBtn').disabled=!on;$('#restoreBtn').disabled=!on}
-function renderBuckets(v,kind){const box=$(kind==='food'?'#foodBuckets':'#socialBuckets');box.innerHTML='';for(const [key,b] of Object.entries(v.budgets[kind])){const spent=kind==='food'?currentWeekSpent(v,key):socialSpent(v,key),remain=Math.max(0,b.limit-spent),el=document.createElement('div');el.className='bucket';const periodText=kind==='food'?(v.archived?'за период':'на эту неделю'):'на этот период';el.innerHTML=`<div class="bucketTop"><div><div class="bucketName">${safe(b.name)}</div><div class="sub">${periodText} · лимит ${money(b.limit)}</div></div><div class="bucketRemain">${v.archived&&kind==='food'?money(spent)+' потрачено':money(remain)}</div></div><div class="progress ${kind==='social'?'blue':''}"><i style="width:${b.limit?Math.min(100,spent/b.limit*100):0}%"></i></div><div class="row"><div class="sub">Потрачено ${money(spent)}</div><button class="btn tiny" data-spend="${kind}" data-bucket="${key}" ${v.archived?'disabled':''}>− трата</button></div>`;box.appendChild(el)}}
-function renderFixed(v){const box=$('#fixedGroups');box.innerHTML='';for(const [gk,g] of Object.entries(v.budgets.fixed)){const el=document.createElement('div');el.className='fixedGroup';const total=sum((g.items||[]).filter(x=>x.active).map(x=>x.amount));el.innerHTML=`<div class="fixedHead"><div><div class="fixedTitle">${safe(g.name)}</div><div class="sub">активно на ${money(total)}</div></div><button class="btn tiny secondary" data-add-fixed="${gk}" ${v.archived?'disabled':''}>+ статья</button></div><div class="fixedItems"></div>`;const items=el.querySelector('.fixedItems');if(!(g.items||[]).length)items.innerHTML='<div class="empty">Пока пусто.</div>';for(const item of g.items||[]){const row=document.createElement('div');row.className='fixedItem'+(item.active?'':' inactive');row.innerHTML=`<input type="checkbox" ${item.active?'checked':''} data-toggle-fixed="${gk}" data-id="${item.id}" ${v.archived?'disabled':''} aria-label="Учитывать"><div><div class="fiName">${safe(item.name)}</div><div class="fiMeta">${money(item.amount)} · ${item.active?'учитывается':'пауза'}</div></div><div class="fiActions"><button class="btn tiny ghost" data-edit-fixed="${gk}" data-id="${item.id}" ${v.archived?'disabled':''}>изменить</button><button class="btn tiny danger" data-delete-fixed="${gk}" data-id="${item.id}" ${v.archived?'disabled':''}>×</button></div>`;items.appendChild(row)}box.appendChild(el)}}
-function collection(kind,p=state.activePeriod){if(kind==='income')return p.incomes;if(kind==='saving')return p.savings;if(kind==='expense')return p.expenses;if(kind==='cashback')return p.cashbacks;if(kind==='risk')return p.risks;if(kind==='emergency')return p.emergencies}
-function renderHistory(v){const box=$('#historyList');box.innerHTML='';const p=v.period;const rows=[...p.incomes.map(x=>({...x,kind:'income'})),...p.savings.map(x=>({...x,kind:'saving'})),...p.expenses.map(x=>({...x,kind:'expense'})),...p.cashbacks.map(x=>({...x,kind:'cashback'})),...p.risks.map(x=>({...x,kind:'risk'})),...p.emergencies.map(x=>({...x,kind:'emergency'}))].sort((a,b)=>b.ts-a.ts).slice(0,60);if(!rows.length){box.innerHTML='<div class="empty">Пока ни одного движения.</div>';return}for(const x of rows){let title='',sign='−';if(x.kind==='income'){title='Доход';sign='+'}if(x.kind==='saving')title='Казначейство · отложено';if(x.kind==='cashback'){title='Безумный профессор · кэшбек';sign='+'}if(x.kind==='risk')title='Безумный профессор · инвестиция';if(x.kind==='emergency')title='МЧС';if(x.kind==='expense'){const b=v.budgets[x.envelope]?.[x.bucket];title=(x.envelope==='food'?'Минсельхоз · ':'Минкульт · ')+(b?.name||'')}const el=document.createElement('div');el.className='tx';el.innerHTML=`<div><b>${safe(title)}</b><small>${safe(x.note)||new Date(x.ts).toLocaleDateString('ru-RU')}</small></div><div class="txAmount">${sign}${money(x.amount)}</div><div class="txActions"><button class="btn tiny ghost" data-edit-tx="${x.kind}" data-id="${x.id}" ${v.archived?'disabled':''}>изменить</button><button class="btn tiny danger" data-delete-tx="${x.kind}" data-id="${x.id}" ${v.archived?'disabled':''}>удалить</button></div>`;box.appendChild(el)}}
-function renderBreakdown(v){$('#breakdown').innerHTML=`<div class="br"><span>Все доходы</span><b>${money(incomeTotal(v))}</b></div><div class="br"><span>Казначейство · план 10%</span><b>− ${money(savingsPlan(v))}</b></div><div class="br"><span>Минсельхоз · 4 недельных лимита</span><b>− ${money(foodPlan(v))}</b></div><div class="br"><span>Минкульт · лимиты периода</span><b>− ${money(socialPlan(v))}</b></div><div class="br"><span>МВД · активные обязательства</span><b>− ${money(fixedPlan(v))}</b></div><div class="br"><span>МЧС · факт</span><b>− ${money(emergencySpent(v))}</b></div><div class="br"><span>Профицит по плану</span><b>${money(plannedProfit(v))}</b></div>`}
-function render(){const v=activeView(),p=v.period;$('#monthLabel').textContent=periodLabel(p.id);$('#profitPlanned').textContent=money(plannedProfit(v));$('#profitVault').textContent=money(state.profitVault);$('#incomeTotal').textContent=money(incomeTotal(v));$('#savedPlan').textContent=money(savingsPlan(v));$('#savedFact').textContent=money(savingsFact(v));const sp=savingsPlan(v),sf=savingsFact(v);$('#savingBar').style.width=(sp?Math.min(100,sf/sp*100):(sf>0?100:0))+'%';$('#savingRemain').textContent=sf>=sp?'План выполнен':'До плана '+money(sp-sf);$('#cashNow').textContent=money(cashNow(v));$('#cashbackBalance').textContent=money(cashbackBalance(v));$('#emergencySpent').textContent=money(emergencySpent(v));renderBuckets(v,'food');renderBuckets(v,'social');renderFixed(v);renderBreakdown(v);renderHistory(v);$('#archiveNotice').classList.toggle('show',v.archived);if(v.archived)$('#archiveTitle').textContent=`${periodLabel(p.id)} · ${shortDate(p.start)}—${shortDate(p.end)}`;setEditable(!v.archived);updateBackupStatus()}
-function openSettings(){if(viewArchiveId)return;const b=state.budgets;$('#foodCoupleInput').value=b.food.couple.limit||'';$('#foodMomInput').value=b.food.mom.limit||'';$('#socialOksanaInput').value=b.social.oksana.limit||'';$('#socialTimInput').value=b.social.tim.limit||'';$('#socialMomInput').value=b.social.mom.limit||'';$('#settingsDialog').showModal()}
-function openEntry(mode,o={}){if(viewArchiveId)return;entryMode=mode;editRef=o.edit||null;$('#entryAmount').value=o.amount??'';$('#entryNote').value=o.note??'';const names={income:'Доход',saving:'Отложено',cashback:'Кэшбек',risk:'Рисковая инвестиция',emergency:'МЧС',expense:'Трата'};$('#entryTitle').textContent=(editRef?'Изменить · ':'Добавить · ')+names[mode];if(mode==='income')$('#entryHint').textContent='Новое поступление просто прибавится к текущему финансовому месяцу.';if(mode==='saving')$('#entryHint').textContent='Это факт: сколько реально ушло в отложенные.';if(mode==='cashback')$('#entryHint').textContent='Отдельный поток, не смешивается с семейным бюджетом.';if(mode==='risk')$('#entryHint').textContent='Списывается из лаборатории кэшбека.';if(mode==='emergency')$('#entryHint').textContent='Внеплановая трата. Без категории и без чувства, что мир обязан быть идеальным.';if(mode==='expense')$('#entryHint').textContent=o.label||'Конверт';if(o.envelope)editRef={...(editRef||{}),envelope:o.envelope,bucket:o.bucket};$('#entryDialog').showModal();setTimeout(()=>$('#entryAmount').focus(),30)}
-function saveEntry(){const amount=+$('#entryAmount').value,note=$('#entryNote').value.trim();if(!(amount>0))return;const p=state.activePeriod;if(entryMode==='risk'&&!editRef&&amount>cashbackBalance(activeView())){toast('В лаборатории столько нет');return}if(editRef?.id){const item=collection(entryMode,p).find(x=>x.id===editRef.id);if(!item)return;if(entryMode==='risk'&&amount>cashbackBalance(activeView())+item.amount){toast('В лаборатории столько нет');return}item.amount=amount;item.note=note}else{const base={id:id(),amount,note,ts:Date.now()};if(entryMode==='income')p.incomes.push(base);if(entryMode==='saving')p.savings.push(base);if(entryMode==='cashback')p.cashbacks.push(base);if(entryMode==='risk')p.risks.push(base);if(entryMode==='emergency')p.emergencies.push(base);if(entryMode==='expense')p.expenses.push({...base,envelope:editRef.envelope,bucket:editRef.bucket,week:editRef.envelope==='food'?weekKey(new Date()):null})}save();render();$('#entryDialog').close();toast('Сохранено')}
-function openFixed(groupKey,itemId=null){if(viewArchiveId)return;fixedRef={groupKey,itemId};const g=state.budgets.fixed[groupKey],item=itemId?g.items.find(x=>x.id===itemId):null;$('#fixedDialogTitle').textContent=item?'Изменить статью':'Новая статья';$('#fixedDialogHint').textContent='Группа: '+g.name;$('#fixedNameInput').value=item?.name||'';$('#fixedAmountInput').value=item?.amount||'';$('#fixedDialog').showModal();setTimeout(()=>$('#fixedNameInput').focus(),30)}
-function saveFixed(){const name=$('#fixedNameInput').value.trim(),amount=+$('#fixedAmountInput').value;if(!name||amount<0)return;const g=state.budgets.fixed[fixedRef.groupKey];if(fixedRef.itemId){const item=g.items.find(x=>x.id===fixedRef.itemId);item.name=name;item.amount=amount}else g.items.push({id:id(),name,amount,active:false});save();render();$('#fixedDialog').close();toast('Статья сохранена')}
-function editTx(kind,idv){if(viewArchiveId)return;const item=collection(kind).find(x=>x.id===idv);if(!item)return;let label='';if(kind==='expense'){const b=state.budgets[item.envelope]?.[item.bucket];label=(item.envelope==='food'?'Минсельхоз · ':'Минкульт · ')+(b?.name||'')}openEntry(kind,{edit:{id:item.id,envelope:item.envelope,bucket:item.bucket},amount:item.amount,note:item.note,label})}
-function deleteTx(kind,idv){if(viewArchiveId||!confirm('Удалить эту запись?'))return;const a=collection(kind),i=a.findIndex(x=>x.id===idv);if(i>=0)a.splice(i,1);save();render()}
-function renderPeriods(){const box=$('#periodList');box.innerHTML='';const p=state.activePeriod;const cur=document.createElement('button');cur.className='periodBtn current';cur.innerHTML=`<div><b>${periodLabel(p.id)}</b><small>${shortDate(p.start)}—${shortDate(p.end)} · текущий</small></div><span>→</span>`;cur.addEventListener('click',()=>{viewArchiveId=null;$('#periodDialog').close();render()});box.appendChild(cur);for(const a of [...state.archives].sort((x,y)=>y.period.id.localeCompare(x.period.id))){const b=document.createElement('button');b.className='periodBtn';b.innerHTML=`<div><b>${periodLabel(a.period.id)}</b><small>${shortDate(a.period.start)}—${shortDate(a.period.end)} · профицит ${money(a.closingProfit)}</small></div><span>архив</span>`;b.addEventListener('click',()=>{viewArchiveId=a.id;$('#periodDialog').close();render()});box.appendChild(b)}const today=iso(new Date());$('#closeHint').textContent=today>=p.end?`Период уже дошёл до ${shortDate(p.end)} — можно закрывать.`:`Плановая дата закрытия: ${shortDate(p.end)}. Закрыть вручную можно и раньше.`}
-function closeCurrentPeriod(){if(viewArchiveId)return;const v=activeView(),p=state.activePeriod,final=cashNow(v);if(!confirm(`Закрыть ${periodLabel(p.id)}?\n\nВ ФНБ уйдёт ${money(final)}.\nГалочки МВД и все статьи останутся как есть.`))return;const archive={id:id(),closedAt:Date.now(),period:clone(p),budgets:clone(state.budgets),cashbackCarry:state.cashbackCarry,closingProfit:final};state.archives.push(archive);state.profitVault+=final;state.cashbackCarry=cashbackBalance(v);state.activePeriod=newPeriod(nextPeriodId(p.id));save();viewArchiveId=null;$('#periodDialog').close();render();toast('Финансовый месяц закрыт')}
-function makeBackup(){const blob=new Blob([JSON.stringify({app:'profitlab',version:4,exportedAt:new Date().toISOString(),state},null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=`profitlab-${state.activePeriod.id}-${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);localStorage.setItem(BACKUP,new Date().toISOString());updateBackupStatus();toast('Резервная копия сохранена')}
-function updateBackupStatus(){const x=localStorage.getItem(BACKUP);$('#backupStatus').textContent=x?'Последний файл: '+new Date(x).toLocaleString('ru-RU'):'Файл ещё не выгружался'}
-function restoreFromFile(file){const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result),s=d.state||d;if(s?.version!==4)throw new Error();if(!confirm('Заменить текущие данные данными из резервной копии?'))return;state=s;viewArchiveId=null;localStorage.setItem(KEY,JSON.stringify(state));render();toast('Данные восстановлены')}catch{alert('Не удалось прочитать резервную копию Profitlab')}};r.readAsText(file)}
-$('#periodBtn').addEventListener('click',()=>{renderPeriods();$('#periodDialog').showModal()});$('#periodClose').addEventListener('click',()=>$('#periodDialog').close());$('#closePeriodBtn').addEventListener('click',closeCurrentPeriod);$('#backCurrentBtn').addEventListener('click',()=>{viewArchiveId=null;render()});
-$('#settingsBtn').addEventListener('click',openSettings);$('#settingsCancel').addEventListener('click',()=>$('#settingsDialog').close());$('#settingsSave').addEventListener('click',()=>{const b=state.budgets;b.food.couple.limit=+$('#foodCoupleInput').value||0;b.food.mom.limit=+$('#foodMomInput').value||0;b.social.oksana.limit=+$('#socialOksanaInput').value||0;b.social.tim.limit=+$('#socialTimInput').value||0;b.social.mom.limit=+$('#socialMomInput').value||0;save();render();$('#settingsDialog').close();toast('Лимиты сохранены')});
-$('#incomeAddBtn').addEventListener('click',()=>openEntry('income'));$('#savingAddBtn').addEventListener('click',()=>openEntry('saving'));$('#cashbackAddBtn').addEventListener('click',()=>openEntry('cashback'));$('#riskAddBtn').addEventListener('click',()=>openEntry('risk'));$('#emergencyAddBtn').addEventListener('click',()=>openEntry('emergency'));$('#entryCancel').addEventListener('click',()=>$('#entryDialog').close());$('#entrySave').addEventListener('click',saveEntry);$('#entryAmount').addEventListener('keydown',e=>{if(e.key==='Enter')saveEntry()});$('#fixedCancel').addEventListener('click',()=>$('#fixedDialog').close());$('#fixedSave').addEventListener('click',saveFixed);
-$('#backupBtn').addEventListener('click',makeBackup);$('#restoreBtn').addEventListener('click',()=>$('#restoreFile').click());$('#restoreFile').addEventListener('change',e=>{if(e.target.files[0])restoreFromFile(e.target.files[0]);e.target.value=''});
-document.addEventListener('click',e=>{const spend=e.target.closest('[data-spend]');if(spend&&!viewArchiveId){const env=spend.dataset.spend,bucket=spend.dataset.bucket,b=state.budgets[env][bucket];openEntry('expense',{envelope:env,bucket,label:(env==='food'?'Минсельхоз · ':'Минкульт · ')+b.name})}const addf=e.target.closest('[data-add-fixed]');if(addf)openFixed(addf.dataset.addFixed);const editf=e.target.closest('[data-edit-fixed]');if(editf)openFixed(editf.dataset.editFixed,editf.dataset.id);const delf=e.target.closest('[data-delete-fixed]');if(delf&&!viewArchiveId){const g=state.budgets.fixed[delf.dataset.deleteFixed],i=g.items.findIndex(x=>x.id===delf.dataset.id);if(i>=0&&confirm('Удалить эту статью?')){g.items.splice(i,1);save();render()}}const ed=e.target.closest('[data-edit-tx]');if(ed)editTx(ed.dataset.editTx,ed.dataset.id);const del=e.target.closest('[data-delete-tx]');if(del)deleteTx(del.dataset.deleteTx,del.dataset.id)});
-document.addEventListener('change',e=>{const cb=e.target.closest('[data-toggle-fixed]');if(!cb||viewArchiveId)return;const g=state.budgets.fixed[cb.dataset.toggleFixed],item=g.items.find(x=>x.id===cb.dataset.id);if(item){item.active=cb.checked;save();render();toast(cb.checked?'Обязательство учитывается':'Обязательство на паузе')}});
-render();
-})();
-</script>
+<script src="./app-core.js?v=5"></script>
+<script src="./app-ui.js?v=5"></script>
+<script src="./app-edit.js?v=5"></script>
+<script src="./app-main.js?v=5"></script>
 </body>
 </html>
