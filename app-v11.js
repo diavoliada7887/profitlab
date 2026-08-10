@@ -16,15 +16,17 @@
   const goalSpendCurrent=g=>sum(goalMovesBy(g,'spend').filter(x=>x.periodId===currentPid()).map(x=>x.amount));
   const goalUnfundedSpendCurrent=g=>sum(goalMovesBy(g,'spend').filter(x=>x.periodId===currentPid()).map(x=>Math.max(0,(+x.amount||0)-(+x.reserveUsed||0))));
 
-  function monthIndex(pid){const[y,m]=pid.split('-').map(Number);return y*12+(m-1)}
-  function periodsToDue(g){
-    if(!g.dueDate)return 1;
-    const duePid=periodIdFromDate(new Date(g.dueDate+'T12:00:00'));
-    return Math.max(1,monthIndex(duePid)-monthIndex(currentPid())+1);
+  function daysToDue(g){
+    if(!g.dueDate)return 0;
+    const now=new Date(),today=new Date(now.getFullYear(),now.getMonth(),now.getDate(),12),due=new Date(g.dueDate+'T12:00:00');
+    return Math.max(0,Math.ceil((due-today)/86400000));
+  }
+  function biweeklyStepsToDue(g){
+    return Math.max(1,Math.ceil((daysToDue(g)+1)/14));
   }
   function goalRecommended(g){
     if(!g.active||g.priority!=='required')return 0;
-    return goalRemaining(g)/periodsToDue(g);
+    return goalRemaining(g)/biweeklyStepsToDue(g);
   }
   function goalProjectedPlan(){
     let n=0;
@@ -56,8 +58,8 @@
   const familyMetrics=document.querySelector('#familyView .metrics.two');
   if(familyMetrics&&!$('#goalsCard')){
     const card=document.createElement('section');card.className='card wide goalsCard';card.id='goalsCard';card.innerHTML=`
-      <div class="head"><div><div class="title">Госплан · будущие расходы</div><div class="sub">Деньги остаются на руках, но перестают считаться свободными. Обязательные цели входят в план периода.</div></div><div class="icon">📌</div></div>
-      <div class="goalSummary"><div><span>Зарезервировано</span><b id="goalReservedTotal">0 ₽</b></div><div><span>Нужно зарезервировать в этом периоде</span><b id="goalPlanCurrent">0 ₽</b></div><button class="btn tiny" id="goalAddBtn">+ цель</button></div>
+      <div class="head"><div><div class="title">Госплан · будущие расходы</div><div class="sub">Деньги остаются на руках, но перестают считаться свободными. Для обязательных целей Госплан считает темп каждые 14 дней.</div></div><div class="icon">📌</div></div>
+      <div class="goalSummary"><div><span>Зарезервировано</span><b id="goalReservedTotal">0 ₽</b></div><div><span>Нужно зарезервировать в ближайшие 14 дней</span><b id="goalPlanCurrent">0 ₽</b></div><button class="btn tiny" id="goalAddBtn">+ цель</button></div>
       <div class="goalList" id="goalList"></div>`;
     familyMetrics.insertAdjacentElement('afterend',card);
   }
@@ -85,9 +87,9 @@
   function goalStatus(g){if(g.status==='done')return 'закрыта';if(g.status==='cancelled')return 'отменена';return g.active?'действует':'пауза'}
   function updateGoalPreview(){
     const target=+$('#goalTargetInput').value||0,due=$('#goalDueInput').value,priority=$('#goalPriorityInput').value;
-    if(!target||!due){$('#goalPreview').textContent='Укажи сумму и дату — посчитаю темп резерва.';return}
-    const temp={target,dueDate:due,priority,active:true,id:'preview'},periods=periodsToDue(temp),per=target/periods;
-    $('#goalPreview').textContent=priority==='required'?`До срока ${periods} финансовых период${periods===1?'':'а/ов'}. Сейчас темп примерно ${money(per)} за период.`:'Желательная цель не уменьшает план сама по себе — только когда ты реально кладёшь в неё резерв.';
+    if(!target||!due){$('#goalPreview').textContent='Укажи сумму и дату — посчитаю двухнедельный темп резерва.';return}
+    const temp={target,dueDate:due,priority,active:true,id:'preview'},steps=biweeklyStepsToDue(temp),per=target/steps;
+    $('#goalPreview').textContent=priority==='required'?`До срока ${steps} двухнедельных шаг${steps===1?'':'а/ов'}. Темп сейчас примерно ${money(per)} каждые 14 дней.`:'Желательная цель не уменьшает план сама по себе — только когда ты реально кладёшь в неё резерв.';
   }
   ['goalTargetInput','goalDueInput','goalPriorityInput'].forEach(x=>$('#'+x)?.addEventListener('input',updateGoalPreview));
 
@@ -103,7 +105,7 @@
   }
   function openGoalMove(gid,mode){
     const g=state.goals.find(x=>x.id===gid);if(!g)return;goalMoveId=gid;goalMoveMode=mode;const reserve=goalReserve(g),remain=Math.max(0,(+g.target||0)-goalSpent(g));
-    if(mode==='reserve'){$('#goalMoveTitle').textContent='Зарезервировать · '+g.name;$('#goalMoveHint').textContent=`Сейчас в резерве ${money(reserve)}. Эти деньги останутся в «ДЕНЕГ СЕЙЧАС», но перестанут быть свободными.`;$('#goalMoveAmount').value=Math.round(goalRecommended(g))||''}
+    if(mode==='reserve'){$('#goalMoveTitle').textContent='Зарезервировать · '+g.name;$('#goalMoveHint').textContent=`Сейчас в резерве ${money(reserve)}. Чтобы успеть к сроку, текущий темп — примерно ${money(goalRecommended(g))} каждые 14 дней.`;$('#goalMoveAmount').value=Math.round(goalRecommended(g))||''}
     else{$('#goalMoveTitle').textContent='Оплатить · '+g.name;$('#goalMoveHint').textContent=`В резерве ${money(reserve)}. Фактический платёж уменьшит деньги на руках. Зарезервированная часть второй раз из профицита не вычитается.`;$('#goalMoveAmount').value=Math.min(reserve||remain,remain)||''}
     $('#goalMoveNote').value='';$('#goalMoveDialog').showModal();setTimeout(()=>$('#goalMoveAmount').focus(),30);
   }
@@ -132,9 +134,9 @@
     const reserved=sum(goals.map(goalReserve)),plan=goalProjectedPlan();$('#goalReservedTotal').textContent=money(reserved);$('#goalPlanCurrent').textContent=money(plan);
     $('#goalsCard').style.display=viewArchiveId?'none':'';
     if(!goals.length){box.innerHTML='<div class="empty">Пока Госплан никому ничего не обещал. Подозрительно.</div>';return}
-    for(const g of goals){const reserve=goalReserve(g),spent=goalSpent(g),remain=goalRemaining(g),rec=goalRecommended(g),covered=Math.min(+g.target||0,reserve+spent),pct=g.target?Math.min(100,covered/g.target*100):0,moves=goalMoves(g).sort((a,b)=>(b.ts||0)-(a.ts||0)),last=moves[0],el=document.createElement('div');el.className='goalItem'+(g.active?'':' inactive');
+    for(const g of goals){const reserve=goalReserve(g),spent=goalSpent(g),remain=goalRemaining(g),rec=goalRecommended(g),steps=biweeklyStepsToDue(g),covered=Math.min(+g.target||0,reserve+spent),pct=g.target?Math.min(100,covered/g.target*100):0,moves=goalMoves(g).sort((a,b)=>(b.ts||0)-(a.ts||0)),last=moves[0],el=document.createElement('div');el.className='goalItem'+(g.active?'':' inactive');
       const mandatory=g.priority==='required'?'<span class="businessBadge">ОБЯЗАТЕЛЬНАЯ</span>':'<span class="tag">ЖЕЛАТЕЛЬНАЯ</span>',overdue=g.active&&g.dueDate&&g.dueDate<iso(new Date())?'<span class="businessBadge">СРОК ПРОШЁЛ</span>':'';
-      el.innerHTML=`<div class="goalTop"><div><div class="goalName">${safe(g.name)}</div><div class="goalBadges">${mandatory}${overdue}<span class="tag">${goalStatus(g)}</span></div><div class="sub">к ${fmtDate(g.dueDate)}${g.note?' · '+safe(g.note):''}</div></div><div class="amount">${money(g.target)}</div></div><div class="progress gold"><i style="width:${pct}%"></i></div><div class="goalNumbers"><div class="goalNum">В резерве<b>${money(reserve)}</b></div><div class="goalNum">Уже оплачено<b>${money(spent)}</b></div><div class="goalNum">Осталось обеспечить<b>${money(remain)}</b></div><div class="goalNum">Темп этого периода<b>${g.active&&g.priority==='required'?money(rec):'—'}</b></div></div><div class="goalActions"><button class="btn tiny" data-goal-reserve="${g.id}" ${!g.active?'disabled':''}>+ в резерв</button><button class="btn tiny secondary" data-goal-spend="${g.id}" ${!g.active?'disabled':''}>− оплатить</button><button class="btn tiny ghost" data-goal-edit="${g.id}">изменить</button><button class="btn tiny danger" data-goal-cancel="${g.id}" ${!g.active?'disabled':''}>отменить цель</button></div>${last?`<div class="goalMoves"><span>Последнее: ${last.type==='reserve'?'в резерв':last.type==='spend'?'оплачено':'резерв освобождён'} ${money(last.amount)}${last.note?' · '+safe(last.note):''}</span><button class="btn tiny ghost" data-goal-undo="${g.id}">↶ отменить последнее</button></div>`:''}`;box.appendChild(el)}
+      el.innerHTML=`<div class="goalTop"><div><div class="goalName">${safe(g.name)}</div><div class="goalBadges">${mandatory}${overdue}<span class="tag">${goalStatus(g)}</span></div><div class="sub">к ${fmtDate(g.dueDate)}${g.active&&g.priority==='required'?` · осталось ${steps} шаг${steps===1?'':'а/ов'} по 14 дней`:''}${g.note?' · '+safe(g.note):''}</div></div><div class="amount">${money(g.target)}</div></div><div class="progress gold"><i style="width:${pct}%"></i></div><div class="goalNumbers"><div class="goalNum">В резерве<b>${money(reserve)}</b></div><div class="goalNum">Уже оплачено<b>${money(spent)}</b></div><div class="goalNum">Осталось обеспечить<b>${money(remain)}</b></div><div class="goalNum">Темп / 14 дней<b>${g.active&&g.priority==='required'?money(rec):'—'}</b></div></div><div class="goalActions"><button class="btn tiny" data-goal-reserve="${g.id}" ${!g.active?'disabled':''}>+ в резерв</button><button class="btn tiny secondary" data-goal-spend="${g.id}" ${!g.active?'disabled':''}>− оплатить</button><button class="btn tiny ghost" data-goal-edit="${g.id}">изменить</button><button class="btn tiny danger" data-goal-cancel="${g.id}" ${!g.active?'disabled':''}>отменить цель</button></div>${last?`<div class="goalMoves"><span>Последнее: ${last.type==='reserve'?'в резерв':last.type==='spend'?'оплачено':'резерв освобождён'} ${money(last.amount)}${last.note?' · '+safe(last.note):''}</span><button class="btn tiny ghost" data-goal-undo="${g.id}">↶ отменить последнее</button></div>`:''}`;box.appendChild(el)}
   }
 
   $('#goalAddBtn')?.addEventListener('click',()=>openGoal());$('#goalCancelBtn')?.addEventListener('click',()=>$('#goalDialog').close());$('#goalSaveBtn')?.addEventListener('click',saveGoal);$('#goalMoveCancel')?.addEventListener('click',()=>$('#goalMoveDialog').close());$('#goalMoveSave')?.addEventListener('click',saveGoalMove);
