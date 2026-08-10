@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#15364a">
   <title>Профицит · семейная республика</title>
-  <link rel="stylesheet" href="./style.css?v=5">
+  <link rel="stylesheet" href="./style.css?v=7">
 </head>
 <body>
 <main class="wrap">
@@ -17,103 +17,170 @@
     </div>
   </header>
 
-  <div class="archiveNotice" id="archiveNotice">
-    <div><b id="archiveTitle"></b><div class="sub">Архивный период открыт только для просмотра.</div></div>
-    <button class="btn tiny" id="backCurrentBtn">Вернуться в текущий</button>
-  </div>
+  <nav class="viewTabs" aria-label="Разделы">
+    <button class="viewTab active" id="familyTab">🏠 Семья</button>
+    <button class="viewTab" id="businessTab">🏢 Бизнес</button>
+  </nav>
 
-  <section class="hero">
-    <div class="heroTop">
-      <div>
-        <small>СКВОЗНОЙ ПРОФИЦИТ · ПОСЛЕ ИСПОЛНЕНИЯ ПЛАНА</small>
-        <div class="big" id="profitProjected">0 ₽</div>
-        <div class="heroSub">Может быть отрицательным. Это не ошибка — это честное состояние казны.</div>
-      </div>
-      <div class="heroSide">
-        <span>Если закрыть период прямо сейчас</span><b id="profitIfClose">0 ₽</b>
-        <span>Результат текущего периода по плану</span><b class="smallBig" id="periodResult">0 ₽</b>
-      </div>
+  <section id="familyView">
+    <div class="archiveNotice" id="archiveNotice">
+      <div><b id="archiveTitle"></b><div class="sub">Архивный период открыт только для просмотра.</div></div>
+      <button class="btn tiny" id="backCurrentBtn">Вернуться в текущий</button>
     </div>
-  </section>
 
-  <section class="metrics">
-    <article class="metric">
-      <small>Доход за период</small><b id="incomeTotal">0 ₽</b>
-      <div class="incomeBars" id="incomeBars"></div>
-      <button class="btn tiny editable" id="incomeAddBtn">+ добавить доход</button>
-    </article>
-    <article class="metric">
-      <small>Казначейство · отложено</small>
-      <div class="miniPair"><div><span>План 10%</span><strong id="savedPlan">0 ₽</strong></div><div><span>Факт</span><strong id="savedFact">0 ₽</strong></div></div>
-      <div class="progress gold"><i id="savingBar"></i></div>
-      <div class="row"><div class="sub" id="savingRemain"></div><button class="btn tiny editable" id="savingAddBtn">+ отложить</button></div>
-    </article>
-    <article class="metric">
-      <small>Факт по деньгам сейчас</small><b id="cashFact">0 ₽</b>
-      <div class="sub">Сквозной остаток после уже совершённых движений. Плановые, но ещё не совершённые расходы сюда не попадают.</div>
-    </article>
-  </section>
+    <section class="hero">
+      <div class="heroTop">
+        <div>
+          <small>ДЕНЕГ СЕЙЧАС</small>
+          <div class="big" id="cashFact">0 ₽</div>
+          <div class="heroSub">Фактический остаток после уже совершённых движений. Будущие траты здесь не списаны.</div>
+        </div>
+        <div class="heroSide">
+          <span>После исполнения всего плана периода</span><b id="profitProjected">0 ₽</b>
+          <span>Если закрыть период прямо сейчас</span><b class="smallBig" id="profitIfClose">0 ₽</b>
+          <span>Результат текущего периода по плану</span><b class="smallBig" id="periodResult">0 ₽</b>
+        </div>
+      </div>
+    </section>
 
-  <section class="grid">
-    <article class="card">
-      <div class="head"><div><div class="title">Минсельхоз · продукты</div><div class="sub">Четыре бюджетные недели внутри финансового месяца.</div></div><div class="icon">🥖</div></div>
-      <div class="bucketList" id="foodBuckets"></div>
-    </article>
-
-    <article class="card">
-      <div class="head"><div><div class="title">Минкульт · социалка</div><div class="sub">Три личных конверта на финансовый месяц.</div></div><div class="icon">🎭</div></div>
-      <div class="bucketList" id="socialBuckets"></div>
-    </article>
-
-    <article class="card wide">
-      <div class="head"><div><div class="title">МВД · обязательства</div><div class="sub">«Действует» живёт сквозь месяцы. «Оплачено» — отдельная отметка каждого периода.</div></div><div class="icon">🏛️</div></div>
-      <div class="fixedGroups" id="fixedGroups"></div>
-    </article>
-
-    <article class="card">
-      <div class="head"><div><div class="title">Минфин · госдолг</div><div class="sub">Проценты обслуживаем, всё сверх них уменьшает тело.</div></div><div class="icon">🧱</div></div>
-      <div class="debtSummary"><span>Тело долгов сейчас</span><b id="debtTotal">0 ₽</b></div>
-      <div class="debtList" id="debtList"></div>
-      <button class="btn tiny secondary editable" id="debtAddBtn">+ добавить долг</button>
-    </article>
-
-    <article class="card lab">
-      <div class="head"><div><div class="title">Безумный профессор · кэшбек</div><div class="sub">Всё, что банк по глупости вернул, идёт в эксперименты.</div></div><div class="icon">🧪</div></div>
-      <div class="row"><div><div class="amount" id="cashbackBalance">0 ₽</div><div class="sub">баланс лаборатории</div></div><div class="buttonStack"><button class="btn secondary tiny editable" id="cashbackAddBtn">+ кэшбек</button><button class="btn tiny editable" id="riskAddBtn">→ инвестиция</button></div></div>
-    </article>
-
-    <article class="card">
-      <div class="head"><div><div class="title">МЧС</div><div class="sub">Не хотелка. Просто жизнь внезапно выставила счёт.</div></div><div class="icon">🚨</div></div>
-      <div class="row"><div><div class="amount" id="emergencySpent">0 ₽</div><div class="sub">внепланово потрачено в этом периоде</div></div><button class="btn tiny editable" id="emergencyAddBtn">+ расход</button></div>
-    </article>
-
-    <article class="card businessCard">
-      <div class="head"><div><div class="title">Бизнес должен</div><div class="sub">Семья авансировала бизнес своими деньгами.</div></div><div class="icon">🧾</div></div>
+    <article class="card businessCard businessTop">
+      <div class="head"><div><div class="title">Бизнес должен семье</div><div class="sub">Семья авансировала расходы предприятия своими деньгами.</div></div><div class="icon">🧾</div></div>
       <div class="amount" id="businessDue">0 ₽</div>
       <div class="businessStats"><span>Начислено за период <b id="businessCharged">0 ₽</b></span><span>Возвращено <b id="businessReturned">0 ₽</b></span></div>
       <button class="btn tiny editable" id="businessReturnBtn">+ бизнес вернул</button>
     </article>
 
-    <article class="card wide">
-      <div class="head"><div class="title">Контрольно-счётная палата</div><div class="icon">🧮</div></div>
-      <div class="breakdown" id="breakdown"></div>
-      <div class="note">При закрытии периода только тогда высвобождаются непотраченные остатки Минсельхоза и Минкульта. МВД остаётся зарезервированным по активным обязательствам.</div>
-    </article>
+    <section class="metrics two">
+      <article class="metric">
+        <small>Доход за период</small><b id="incomeTotal">0 ₽</b>
+        <div class="incomeBars" id="incomeBars"></div>
+        <button class="btn tiny editable" id="incomeAddBtn">+ добавить доход</button>
+      </article>
+      <article class="metric">
+        <small>Казначейство · отложено</small>
+        <div class="miniPair"><div><span>План 10%</span><strong id="savedPlan">0 ₽</strong></div><div><span>Факт</span><strong id="savedFact">0 ₽</strong></div></div>
+        <div class="progress gold"><i id="savingBar"></i></div>
+        <div class="row"><div class="sub" id="savingRemain"></div><button class="btn tiny editable" id="savingAddBtn">+ отложить</button></div>
+      </article>
+    </section>
+
+    <section class="grid">
+      <article class="card">
+        <div class="head"><div><div class="title">Минсельхоз · продукты</div><div class="sub">Сайт сам понимает, какая бюджетная неделя сейчас.</div></div><div class="icon">🥖</div></div>
+        <div class="bucketList" id="foodBuckets"></div>
+      </article>
+
+      <article class="card">
+        <div class="head"><div><div class="title">Минкульт · социалка</div><div class="sub">Три личных конверта на финансовый месяц.</div></div><div class="icon">🎭</div></div>
+        <div class="bucketList" id="socialBuckets"></div>
+      </article>
+
+      <article class="card wide">
+        <div class="head"><div><div class="title">МВД · обязательства</div><div class="sub">«Действует» живёт сквозь месяцы. «Оплачено» — отдельная отметка каждого периода.</div></div><div class="icon">🏛️</div></div>
+        <div class="fixedGroups" id="fixedGroups"></div>
+      </article>
+
+      <article class="card">
+        <div class="head"><div><div class="title">Минфин · госдолг</div><div class="sub">Семейные долги. Проценты обслуживаем, всё сверх них уменьшает тело.</div></div><div class="icon">🧱</div></div>
+        <div class="debtSummary"><span>Тело долгов сейчас</span><b id="debtTotal">0 ₽</b></div>
+        <div class="debtList" id="debtList"></div>
+        <button class="btn tiny secondary editable" id="debtAddBtn">+ добавить долг</button>
+      </article>
+
+      <article class="card lab">
+        <div class="head"><div><div class="title">Безумный профессор · кэшбек</div><div class="sub">Всё, что банк по глупости вернул, идёт в эксперименты.</div></div><div class="icon">🧪</div></div>
+        <div class="row"><div><div class="amount" id="cashbackBalance">0 ₽</div><div class="sub">баланс лаборатории</div></div><div class="buttonStack"><button class="btn secondary tiny editable" id="cashbackAddBtn">+ кэшбек</button><button class="btn tiny editable" id="riskAddBtn">→ инвестиция</button></div></div>
+      </article>
+
+      <article class="card">
+        <div class="head"><div><div class="title">МЧС</div><div class="sub">Не хотелка. Просто жизнь внезапно выставила счёт.</div></div><div class="icon">🚨</div></div>
+        <div class="row"><div><div class="amount" id="emergencySpent">0 ₽</div><div class="sub">внепланово потрачено в этом периоде</div></div><button class="btn tiny editable" id="emergencyAddBtn">+ расход</button></div>
+      </article>
+
+      <article class="card wide">
+        <div class="head"><div class="title">Контрольно-счётная палата</div><div class="icon">🧮</div></div>
+        <div class="breakdown" id="breakdown"></div>
+        <div class="note">При закрытии периода высвобождаются непотраченные остатки Минсельхоза и Минкульта. МВД остаётся зарезервированным по активным обязательствам.</div>
+      </article>
+    </section>
+
+    <section class="card history">
+      <div class="head"><div><div class="title">Движения</div><div class="sub">Ручные записи можно исправить или удалить. Метка «Бизнес» видна прямо здесь.</div></div><div class="icon">📜</div></div>
+      <div id="historyList"></div>
+      <div class="backupBar">
+        <button class="btn ghost tiny" id="backupBtn">↓ резервная копия</button>
+        <button class="btn ghost tiny editable" id="restoreBtn">↑ восстановить</button>
+        <input id="restoreFile" type="file" accept="application/json,.json" hidden>
+        <span class="tag">автосохранение включено</span><span class="backupStatus" id="backupStatus"></span>
+      </div>
+    </section>
   </section>
 
-  <section class="card history">
-    <div class="head"><div><div class="title">Движения</div><div class="sub">Ручные записи можно исправить или удалить. Метка «Бизнес» видна прямо здесь.</div></div><div class="icon">📜</div></div>
-    <div id="historyList"></div>
-    <div class="backupBar">
-      <button class="btn ghost tiny" id="backupBtn">↓ резервная копия</button>
-      <button class="btn ghost tiny editable" id="restoreBtn">↑ восстановить</button>
-      <input id="restoreFile" type="file" accept="application/json,.json" hidden>
-      <span class="tag">автосохранение включено</span><span class="backupStatus" id="backupStatus"></span>
+  <section id="businessView" hidden>
+    <section class="hero businessHero">
+      <div class="heroTop">
+        <div>
+          <small>ДЕНЕГ БИЗНЕСА СЕЙЧАС</small>
+          <div class="big" id="businessCashNow">0 ₽</div>
+          <div class="heroSub">Фактические деньги бизнеса после уже совершённых платежей и переводов.</div>
+        </div>
+        <div class="heroSide">
+          <span>Свободно к распределению</span><b id="businessFreeNow">0 ₽</b>
+          <span>Бизнес должен семье</span><b class="smallBig" id="businessDueTop">0 ₽</b>
+          <span>Долги бизнеса · тело</span><b class="smallBig" id="businessDebtBodyTop">0 ₽</b>
+        </div>
+      </div>
+    </section>
+
+    <div class="businessActionsBar">
+      <button class="btn" id="businessRevenueBtn">+ поступление</button>
+      <button class="btn secondary" id="businessOpExpenseBtn">− расход контракта</button>
+      <button class="btn secondary" id="businessTaxBtn">− налог</button>
+      <button class="btn secondary" id="businessDevBtn">− развитие</button>
+      <button class="btn ghost" id="businessReturnTopBtn">↩ вернуть семье</button>
+      <button class="btn ghost" id="businessDistributeBtn">→ вывести доход семье</button>
     </div>
+
+    <section class="businessMetrics">
+      <article class="metric businessMetric"><small>Оборот</small><b id="businessRevenueTotal">0 ₽</b><div class="sub">Все введённые поступления бизнеса.</div></article>
+      <article class="metric businessMetric"><small>Операционный фонд · <span id="businessOpRateLabel">30%</span></small><b id="businessOperatingBalance">0 ₽</b><div class="sub" id="businessOperatingMeta"></div></article>
+      <article class="metric businessMetric"><small>Налоговый резерв · <span id="businessTaxRateLabel">6%</span></small><b id="businessTaxBalance">0 ₽</b><div class="sub" id="businessTaxMeta"></div></article>
+      <article class="metric businessMetric"><small>Фонд развития · <span id="businessDevRateLabel">10%</span></small><b id="businessDevelopmentBalance">0 ₽</b><div class="sub" id="businessDevelopmentMeta"></div></article>
+    </section>
+
+    <section class="grid businessGrid">
+      <article class="card wide">
+        <div class="head"><div><div class="title">Сквозные расходы бизнеса</div><div class="sub">Живут внутри операционного фонда и повторяются каждый финансовый месяц.</div></div><div class="icon">🔁</div></div>
+        <div class="row recurringSummary"><div><b id="businessFixedPlan">0 ₽</b><div class="sub">план текущего месяца</div></div><div><b id="businessFixedPaid">0 ₽</b><div class="sub">уже оплачено</div></div><button class="btn tiny secondary" id="businessFixedAddBtn">+ статья</button></div>
+        <div class="businessFixedList" id="businessFixedList"></div>
+      </article>
+
+      <article class="card">
+        <div class="head"><div><div class="title">Долги бизнеса</div><div class="sub">Займы, взятые ради работы предприятия.</div></div><div class="icon">🏗️</div></div>
+        <div class="debtSummary"><span>Тело долгов сейчас</span><b id="businessDebtTotal">0 ₽</b></div>
+        <div class="debtList" id="businessDebtList"></div>
+        <button class="btn tiny secondary" id="businessDebtAddBtn">+ добавить долг бизнеса</button>
+      </article>
+
+      <article class="card">
+        <div class="head"><div><div class="title">Что уже съел операционный фонд</div><div class="sub">Сюда попадают и расходы, оплаченные семьёй за бизнес.</div></div><div class="icon">⚙️</div></div>
+        <div class="breakdown" id="businessOperatingBreakdown"></div>
+      </article>
+
+      <article class="card wide">
+        <div class="head"><div><div class="title">Логика распределения</div><div class="sub">Не бухгалтерская декларация, а управленческая карта денег.</div></div><div class="icon">🗺️</div></div>
+        <div class="businessFlow" id="businessFlow"></div>
+      </article>
+    </section>
+
+    <section class="card history">
+      <div class="head"><div><div class="title">Движения бизнеса</div><div class="sub">Поступления, расходы, налоги, развитие и переводы семье.</div></div><div class="icon">📚</div></div>
+      <div id="businessHistoryList"></div>
+    </section>
   </section>
 </main>
 
-<dialog id="settingsDialog"><div class="modal"><h3>Лимиты</h3><p>Рамки конвертов постоянные, пока ты сама их не изменишь.</p><div class="formGrid">
+<dialog id="settingsDialog"><div class="modal"><h3>Лимиты семьи</h3><p>Рамки конвертов постоянные, пока ты сама их не изменишь.</p><div class="formGrid">
   <div><label>Минсельхоз · мы с Тимохой / неделя</label><input id="foodCoupleInput" type="number" min="0" step="100"></div>
   <div><label>Минсельхоз · мама / неделя</label><input id="foodMomInput" type="number" min="0" step="100"></div>
   <div><label>Минкульт · Оксана / период</label><input id="socialOksanaInput" type="number" min="0" step="100"></div>
@@ -121,12 +188,25 @@
   <div class="full"><label>Минкульт · мама / период</label><input id="socialMomInput" type="number" min="0" step="100"></div>
 </div><div class="modalActions"><button class="btn secondary" id="settingsCancel">Отмена</button><button class="btn" id="settingsSave">Сохранить</button></div></div></dialog>
 
+<dialog id="businessSettingsDialog"><div class="modal"><h3>Настройки бизнеса</h3><p>Проценты распределяют каждое новое поступление по управленческим фондам.</p><div class="formGrid">
+  <div><label>Операционный фонд, %</label><input id="businessOpRateInput" type="number" min="0" max="100" step="0.1"></div>
+  <div><label>УСН / налоговый резерв, %</label><input id="businessTaxRateInput" type="number" min="0" max="100" step="0.1"></div>
+  <div><label>Фонд развития, %</label><input id="businessDevRateInput" type="number" min="0" max="100" step="0.1"></div>
+</div><div class="note" id="businessRateHint"></div><div class="modalActions"><button class="btn secondary" id="businessSettingsCancel">Отмена</button><button class="btn" id="businessSettingsSave">Сохранить</button></div></div></dialog>
+
 <dialog id="entryDialog"><div class="modal"><h3 id="entryTitle">Запись</h3><p id="entryHint"></p>
   <div id="ownerWrap"><label>Чей доход</label><select id="entryOwner"><option>Оксана</option><option>Тимоха</option><option>Мама</option><option>Совместный</option><option>Другое</option></select></div>
   <label>Сумма</label><input id="entryAmount" type="number" min="0" step="1">
   <label>Комментарий</label><input id="entryNote" type="text" placeholder="необязательно">
   <label class="checkLine" id="businessWrap"><input id="entryBusiness" type="checkbox"> <span>Расход бизнеса</span></label>
   <div class="modalActions"><button class="btn secondary" id="entryCancel">Отмена</button><button class="btn" id="entrySave">Сохранить</button></div>
+</div></dialog>
+
+<dialog id="businessEntryDialog"><div class="modal"><h3 id="businessEntryTitle">Движение бизнеса</h3><p id="businessEntryHint"></p>
+  <div id="businessOwnerWrap" hidden><label>Кому вывести как доход</label><select id="businessEntryOwner"><option>Оксана</option><option>Тимоха</option><option>Совместный</option><option>Мама</option><option>Другое</option></select></div>
+  <label>Сумма</label><input id="businessEntryAmount" type="number" min="0" step="1">
+  <label>Комментарий</label><input id="businessEntryNote" type="text" placeholder="необязательно">
+  <div class="modalActions"><button class="btn secondary" id="businessEntryCancel">Отмена</button><button class="btn" id="businessEntrySave">Сохранить</button></div>
 </div></dialog>
 
 <dialog id="fixedDialog"><div class="modal"><h3 id="fixedDialogTitle">Новая статья</h3><p id="fixedDialogHint"></p>
@@ -137,10 +217,19 @@
   <div class="modalActions"><button class="btn secondary" id="fixedCancel">Отмена</button><button class="btn" id="fixedSave">Сохранить</button></div>
 </div></dialog>
 
-<dialog id="debtDialog"><div class="modal"><h3 id="debtDialogTitle">Долг</h3><p>Проценты — обязательный расход периода. Всё, что платишь сверх них, гасит тело.</p>
+<dialog id="businessFixedDialog"><div class="modal"><h3 id="businessFixedDialogTitle">Сквозной расход</h3><p>Ежемесячный расход внутри 30%-го операционного фонда.</p>
+  <label>Название</label><input id="businessFixedNameInput" type="text" placeholder="например: обслуживание счёта">
+  <label>Сумма в месяц</label><input id="businessFixedAmountInput" type="number" min="0" step="1">
+  <label class="checkLine"><input id="businessFixedActiveInput" type="checkbox"> <span>Статья действует</span></label>
+  <div class="modalActions"><button class="btn secondary" id="businessFixedCancel">Отмена</button><button class="btn" id="businessFixedSave">Сохранить</button></div>
+</div></dialog>
+
+<dialog id="debtDialog"><div class="modal"><h3 id="debtDialogTitle">Долг</h3><p>Вводишь тело и ставку. Сайт считает проценты за финансовый период. Всё сверх них идёт в тело.</p>
   <label>Название</label><input id="debtNameInput" type="text" placeholder="например: кредит 370">
+  <label>Чей долг</label><select id="debtScopeInput"><option value="family">Семья</option><option value="business">Бизнес</option></select>
   <label>Тело долга сейчас</label><input id="debtPrincipalInput" type="number" min="0" step="1">
-  <label>Проценты / обязательный платёж за период</label><input id="debtInterestInput" type="number" min="0" step="1">
+  <label>Процентная ставка</label><input id="debtRateInput" type="number" min="0" step="0.01">
+  <label>Ставка указана</label><select id="debtRateUnitInput"><option value="month">в месяц</option><option value="day">в день</option><option value="year">в год</option></select>
   <label class="checkLine"><input id="debtActiveInput" type="checkbox"> <span>Долг действует</span></label>
   <div class="modalActions"><button class="btn secondary" id="debtCancel">Отмена</button><button class="btn" id="debtSave">Сохранить</button></div>
 </div></dialog>
@@ -148,16 +237,16 @@
 <dialog id="debtPayDialog"><div class="modal"><h3 id="debtPayTitle">Платёж по долгу</h3><p id="debtPayHint"></p>
   <label>Сумма платежа</label><input id="debtPayAmount" type="number" min="0" step="1">
   <label>Комментарий</label><input id="debtPayNote" type="text" placeholder="необязательно">
-  <label class="checkLine"><input id="debtPayBusiness" type="checkbox"> <span>Расход бизнеса</span></label>
+  <div id="debtPaySourceWrap"><label>Из каких денег платим</label><select id="debtPaySource"><option value="family">Семья</option><option value="business">Бизнес</option></select></div>
   <div class="modalActions"><button class="btn secondary" id="debtPayCancel">Отмена</button><button class="btn" id="debtPaySave">Записать платёж</button></div>
 </div></dialog>
 
 <dialog id="periodDialog"><div class="modal"><h3>Финансовые месяцы</h3><p>Каждый период идёт с 9-го числа по 8-е следующего месяца.</p><div class="periodList" id="periodList"></div><div class="dangerZone"><button class="btn" id="closePeriodBtn">Закрыть текущий месяц</button><div class="note" id="closeHint"></div></div><div class="modalActions"><button class="btn secondary" id="periodClose">Закрыть окно</button></div></div></dialog>
 
 <div class="toast" id="toast"></div>
-<script src="./app-core.js?v=5"></script>
-<script src="./app-ui.js?v=5"></script>
-<script src="./app-edit.js?v=5"></script>
-<script src="./app-main.js?v=5"></script>
+<script src="./app-core.js?v=7"></script>
+<script src="./app-ui.js?v=7"></script>
+<script src="./app-edit.js?v=7"></script>
+<script src="./app-main.js?v=7"></script>
 </body>
 </html>
