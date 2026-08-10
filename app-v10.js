@@ -71,4 +71,4 @@
   render=function(){oldRender();const v=activeView();renderDebts(v);renderDebtList(v,'business','#businessDebtList','#businessDebtTotal');const credited=creditedSavingsActual(v),raw=rawInstallmentActual(v,'savings');if($('#installmentSavingsFact'))$('#installmentSavingsFact').textContent=raw?`Через рассрочки уплачено ${money(raw)}, в накопления по ликвидной стоимости зачтено ${money(credited)}.`:'';refreshSavingsField()};
   render();
 })();
-const profitlabV11=document.createElement('script');profitlabV11.src='./app-v11.js?v=13';profitlabV11.onload=()=>{const profitlabV12=document.createElement('script');profitlabV12.src='./app-v12.js?v=13';document.body.appendChild(profitlabV12)};document.body.appendChild(profitlabV11);
+const profitlabV11=document.createElement('script');profitlabV11.src='./app-v11.js?v=14';profitlabV11.onload=()=>{const profitlabV12=document.createElement('script');profitlabV12.src='./app-v12.js?v=14';document.body.appendChild(profitlabV12)};document.body.appendChild(profitlabV11);
