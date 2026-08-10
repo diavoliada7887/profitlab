@@ -71,3 +71,4 @@
   render=function(){oldRender();const v=activeView();renderDebts(v);renderDebtList(v,'business','#businessDebtList','#businessDebtTotal');const credited=creditedSavingsActual(v),raw=rawInstallmentActual(v,'savings');if($('#installmentSavingsFact'))$('#installmentSavingsFact').textContent=raw?`Через рассрочки уплачено ${money(raw)}, в накопления по ликвидной стоимости зачтено ${money(credited)}.`:'';refreshSavingsField()};
   render();
 })();
+const profitlabV11=document.createElement('script');profitlabV11.src='./app-v11.js?v=11';document.body.appendChild(profitlabV11);
