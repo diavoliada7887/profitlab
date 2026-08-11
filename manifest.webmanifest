@@ -1,0 +1,17 @@
+{
+  "name": "Профицит · семейная республика",
+  "short_name": "Профицит",
+  "start_url": "/profitlab/",
+  "scope": "/profitlab/",
+  "display": "standalone",
+  "background_color": "#15364a",
+  "theme_color": "#15364a",
+  "icons": [
+    {
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
